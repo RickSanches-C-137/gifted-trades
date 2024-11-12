@@ -11,7 +11,7 @@ async function bootstrap() {
     logger.log("datasource initialized", { name: "gifted-trades" });
   } catch (err) {
     logger.error("unable to initialize datasource", {
-      name: "Trade Sphere",
+      name: "Gifted Trades",
       //reason: err.message,
     });
   }
