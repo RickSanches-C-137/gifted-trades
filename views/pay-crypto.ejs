@@ -31,7 +31,7 @@
     <%- include('partials/nav-2') %>
 
         <!-- Main Content -->
-        <div class="container mx-auto mt-24 mb-4 p-8 bg-black shadow-lg rounded-lg max-w-xl">
+        <div class="container mx-auto mt-24 mb-4 p-8 bg-black shadow-lg rounded-lg max-w-2xl">
             <h1 class="text-center mb-6">Payment Instructions</h1>
 
             <p class="text-lg text-center mb-4">SEND <span class="text-green-600">$<%= order.amount %>
@@ -51,7 +51,7 @@
 
             <div class="flex items-center justify-center mb-12">
                 <!-- Placeholder for QR Code -->
-                <img src="<%= wallet.barcode %>" alt="QR Code" class="w-fit h-40">
+                <img src="/<%= wallet.barcode %>" alt="QR Code" class="w-fit h-40">
             </div>
 
             <!-- <div class="text-center font-semibold text-red-600 text-2xl mb-6">

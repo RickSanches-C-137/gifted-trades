@@ -22,6 +22,7 @@ app.use(express.json());
 app.use(cors());
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../views"));
+app.use(express.static(path.join(__dirname, '../public')));
 
 const requireLogin = (req: Request, res: Response, next: NextFunction) => {
   const authCookie = req.cookies.auth;
