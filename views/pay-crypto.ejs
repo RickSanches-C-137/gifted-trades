@@ -64,8 +64,8 @@
                     style="background-color: #57B6AD;">
                     CLICK TO COPY WALLET ADDRESS
                 </button>
-                <button class="text-white py-1 text-sm mx-40 rounded-lg shadow-md transition hover:shadow-lg"
-                    style="color: #57B6AD; border: 1px solid #57B6AD;">
+                <button onclick="processPayment()" class="text-white py-1 text-sm mx-40 rounded-lg shadow-md transition hover:shadow-lg"
+                style="color: #57B6AD; border: 1px solid #57B6AD;">
                     I have made the Payment.
                 </button>
             </div>
@@ -77,7 +77,11 @@
                 Wallet address copied to clipboard!
             </div>
         </div>
-
+        <script>
+            function processPayment() {
+                alert("Your payment is being processed! Kindly check back in a jiffy.");
+            }
+        </script>
         <script>
             function copyWalletAddress() {
                 const walletAddressElement = document.getElementById('walletAddress');
