@@ -79,6 +79,24 @@ app.get("/traders", (req: Request, res: Response) => {
   res.render("traders.ejs")
 })
 
+app.get("/users", async (req: Request, res: Response) => {
+  const users = await User.find();
+  res.render("users.ejs", {users})
+})
+
+app.get('/users/:id/edit', async (req, res) => {
+  const userId = req.params.id;
+  const userFunds = await Dashboard.findOne({userId})
+  // Fetch the user by ID and render an edit page
+  res.render('edit-user', { user: userFunds });
+});
+
+app.post('/edit-user', (req, res) => {
+  const userId = req.body.userId;
+  const updatedData = req.body; // Contains the updated user details
+  console.log(`Updated User ${userId}:`, updatedData);
+  res.redirect('/users'); // Redirect to the user list page
+});
 app.get("/fund/pay-crypto", async (req: Request, res: Response) => {
   const orderId = req.query.orderId as string;
   const order = await Order.findOne({ _id: orderId })
