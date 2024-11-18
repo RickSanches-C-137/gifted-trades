@@ -6,6 +6,7 @@ export interface IDashboard {
   profit: Types.Decimal128;
   netProfit: Types.Decimal128;
   todaysProfit: Types.Decimal128;
+  package: string;
   createdAt: Date;
 }
 
@@ -15,6 +16,7 @@ const DashboardSchema = new Schema<IDashboard>({
   profit: { type: Schema.Types.Decimal128, default: 0 },
   netProfit: { type: Schema.Types.Decimal128, default: 0 },
   todaysProfit: { type: Schema.Types.Decimal128, default: 0 },
+  package: { type: String, default: "InActive" },
   createdAt: { type: Date, default: Date.now }
 });
 

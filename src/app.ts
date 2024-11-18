@@ -91,11 +91,34 @@ app.get('/users/:id/edit', async (req, res) => {
   res.render('edit-user', { user: userFunds });
 });
 
-app.post('/edit-user', (req, res) => {
-  const userId = req.body.userId;
-  const updatedData = req.body; // Contains the updated user details
-  console.log(`Updated User ${userId}:`, updatedData);
-  res.redirect('/users'); // Redirect to the user list page
+app.post('/edit-user', async (req, res) => {
+  try {
+    const { userId, deposit, profit, netProfit, todaysProfit } = req.body;
+
+    // Validate input
+    if (!userId) {
+      return res.status(400).send('User ID is required');
+    }
+
+    // Update the fields in the database
+    await Dashboard.updateOne(
+      {  userId },
+      {
+        $set: {
+          deposit: deposit ? parseFloat(deposit) : undefined,
+          profit: profit ? parseFloat(profit) : undefined,
+          netProfit: netProfit ? parseFloat(netProfit) : undefined,
+          todaysProfit: todaysProfit ? parseFloat(todaysProfit) : undefined,
+        },
+      }
+    );
+
+    // Redirect or send a success response
+    res.redirect('/users'); // Assuming there's a dashboard page
+  } catch (error) {
+    console.error('Error updating dashboard:', error);
+    res.status(500).send('An error occurred while updating the dashboard.');
+  }
 });
 app.get("/fund/pay-crypto", async (req: Request, res: Response) => {
   const orderId = req.query.orderId as string;

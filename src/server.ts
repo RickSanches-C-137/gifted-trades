@@ -17,7 +17,7 @@ async function bootstrap() {
   }
 
   // console.log(process.env.DATABASE_URL)
-  const PORT = process.env.PORT || 2001
+  const PORT = process.env.PORT || 5001
   const server = app.listen(PORT, () => {
     console.log(`connected to port`, { PORT })
   })
