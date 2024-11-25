@@ -69,6 +69,12 @@ app.get("/create-wallet", (req: Request, res: Response) => {
   res.render("create-wallet.ejs")
 })
 
+app.get("/withdraw", async (req: Request, res: Response) => {
+  const userId = req.query.userId as string;
+  const user = await User.findOne({ _id: userId });
+  res.render("withdraw.ejs", { user })
+})
+
 app.get("/profile", async (req: Request, res: Response) => {
   const userId = req.query.userId as string;
   const user = await User.findOne({ _id: userId });
