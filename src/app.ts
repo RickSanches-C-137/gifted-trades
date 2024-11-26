@@ -62,7 +62,8 @@ app.get("/contact", (req: Request, res: Response) => {
 
 
 app.get("/fund/step1", (req: Request, res: Response) => {
-  res.render("step1.ejs")
+  const userId = req.query.userId as string;
+  res.render("step1.ejs", {userId})
 })
 
 app.get("/create-wallet", (req: Request, res: Response) => {
@@ -93,8 +94,9 @@ app.get("/users", async (req: Request, res: Response) => {
 app.get('/users/:id/edit', async (req, res) => {
   const userId = req.params.id;
   const userFunds = await Dashboard.findOne({userId})
+  const orders = await Order.find({userId})
   // Fetch the user by ID and render an edit page
-  res.render('edit-user', { user: userFunds });
+  res.render('edit-user', { user: userFunds, orders });
 });
 
 app.post('/edit-user', async (req, res) => {
@@ -243,12 +245,14 @@ app.post("/login", async (req: Request, res: Response) => {
 
 app.post("/step1", async (req: Request, res: Response) => {
   try {
-    const { amount, type, standardToken } = req.body;
+    const { amount, type, standardToken, userId } = req.body;
     const data: Partial<IOrder> = {
       amount,
       type,
       standardToken,
-      status: "pending"
+      status: "pending",
+      userId,
+     createdAt: new Date()
     }
     const order = await Order.create(data)
 

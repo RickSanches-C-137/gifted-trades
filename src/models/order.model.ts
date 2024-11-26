@@ -6,13 +6,17 @@ export interface IOrder {
   type: string;
   standardToken: string;
   status: string;
+  userId:string;
+  createdAt: Date;
 }
 const orderSchema = new Schema<IOrder>({
   amount: { type: String },
   type: { type: String },
   walletId: { type: String },
   standardToken: { type: String },
-  status: { type: String }
+  userId:{type: String},
+  status: { type: String },
+  createdAt: { type: Date }
 })
 
 const Order = model<IOrder>('Order', orderSchema);
